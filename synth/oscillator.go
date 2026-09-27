@@ -1,6 +1,8 @@
 // This file should implement a basic oscillator.
 // It should generate simple waveforms such as sine, square, saw, and triangle,
 // with controls for frequency, waveform selection, phase, and detune.
+
+// TODO: An oscillator can likely be better represented as a struct, so that should be worked on.
 package synth
 
 import (
@@ -10,10 +12,9 @@ import (
 
 const PhaseBegin float64 = 0.0
 const PhaseEnd float64 = 1.0
-
-const SampleRate uint = 44100 // Samples per second
-const Frequency uint = 440    // Hertz
-const PhaseIncrement float64 = float64(Frequency / SampleRate)
+const SampleRate float64 = 44100.0 // Hertz
+const Frequency float64 = 440.0    // Hertz
+const PhaseIncrement float64 = Frequency / SampleRate
 
 var Phase float64 = PhaseBegin
 
@@ -39,13 +40,11 @@ func GenerateWaveform(waveType string) {
 }
 
 func AccumulatePhase() {
-	for {
-		Phase += PhaseIncrement
-		if Phase >= PhaseEnd {
-			Phase = PhaseBegin
-		}
-		fmt.Printf("Current Phase: %f\n", Phase)
+	Phase += PhaseIncrement
+	if Phase >= PhaseEnd {
+		Phase = PhaseBegin
 	}
+	fmt.Printf("Current Phase: %f\n", Phase)
 }
 
 // Each of these functions generates a sample based
