@@ -3,6 +3,28 @@
 // asks the synth engine for samples and sends those samples to the sound device.
 package synth
 
-const BufferSize uint = 256
+const BUFFER_SIZE uint = 256 // TODO: Needs to be replaced by audio buff size
 
-var SampleBuffer [BufferSize]float64
+var SampleBuffer [BUFFER_SIZE]float64
+
+type Audio struct {
+	// TODO: Add references needed from the Synth engine
+	SampleRate float64
+	Channels   int
+	BufferSize uint
+	Player     any // TODO: decide on audio library; look into Oto
+}
+
+// constructor
+func NewAudio() *Audio {
+	return nil
+}
+
+func (a *Audio) Start() {
+}
+
+func (a *Audio) Stop() {
+}
+
+func (a *Audio) Callback() {
+}

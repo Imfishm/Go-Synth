@@ -11,11 +11,10 @@ type Envelope struct {
 	Amplitude             float64
 	ReleaseStartAmplitude float64
 	SampleRate            float64
-	Progress              int // in # of samples
+	Progress              int // # of samples
 	Stage                 State
 }
 
-// State enum
 type State int
 
 const (
@@ -26,14 +25,14 @@ const (
 	Release
 )
 
-func (e Envelope) Trigger() {
+func (e *Envelope) Trigger() {
 }
 
-func (e Envelope) NoteOff() {
+func (e *Envelope) NoteOff() {
 }
 
-func (e Envelope) Process() {
+func (e *Envelope) Process() {
 }
 
-func (e Envelope) IsActive() {
+func (e *Envelope) IsActive() {
 }

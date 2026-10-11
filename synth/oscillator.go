@@ -20,7 +20,7 @@ var Phase float64 = PhaseBegin
 
 func GenerateWaveform(waveType string) {
 	var amplitude float64
-	for i := range int(BufferSize) {
+	for i := range int(BUFFER_SIZE) {
 		switch waveType {
 		case "sine":
 			amplitude = GenerateSine()

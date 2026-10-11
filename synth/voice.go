@@ -13,19 +13,19 @@ type Voice struct {
 
 // All functions are prototypes currently; not usable
 
-func (v Voice) Start(n Note) {
+func (v *Voice) Start(n Note) {
 }
 
-func (v Voice) Release() {
+func (v *Voice) Release() {
 }
 
-func (v Voice) GenerateAudio() {
+func (v *Voice) GenerateAudio() {
 }
 
-func (v Voice) IsAvailable() bool {
+func (v *Voice) IsAvailable() bool {
 	return false
 }
 
-func (v Voice) IsActive() bool {
+func (v *Voice) IsActive() bool {
 	return false
 }

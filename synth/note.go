@@ -13,6 +13,6 @@ type Note struct {
 	// TODO: Add timestamp for sample accurate timing later on (not needed rn)
 }
 
-func (n Note) NoteToFrequency(noteNum uint8) float64 {
+func (n *Note) NoteToFrequency(noteNum uint8) float64 {
 	return 440.0 * math.Pow(2, ((float64(noteNum)-69)/12))
 }
