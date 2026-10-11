@@ -1,6 +1,3 @@
-// This file should define the basic representation of a musical note.
-// It should provide the information needed to start and stop a note, including
-// MIDI-style note number and velocity information.
 package synth
 
 import "math"
@@ -10,7 +7,7 @@ type Note struct {
 	Velocity uint8
 	Channel  uint8
 	Gate     bool
-	// TODO: Add timestamp for sample accurate timing later on (not needed rn)
+	// TODO: Add timestamp for sample accurate timing later on
 }
 
 func (n *Note) NoteToFrequency(noteNum uint8) float64 {
