@@ -10,60 +10,63 @@ import (
 	"math"
 )
 
-const PhaseBegin float64 = 0.0
-const PhaseEnd float64 = 1.0
-const SampleRate float64 = 44100.0 // Hertz
-const Frequency float64 = 440.0    // Hertz
-const PhaseIncrement float64 = Frequency / SampleRate
+type Oscillator struct {
+	PhaseBegin     float64
+	PhaseEnd       float64
+	SampleRate     float64
+	Frequency      float64
+	PhaseIncrement float64
+	Phase          float64
+}
 
-var Phase float64 = PhaseBegin
-
-func GenerateWaveform(waveType string) {
+func (o *Oscillator) GenerateWaveform(wave string) {
 	var amplitude float64
 	for i := range int(BUFFER_SIZE) {
-		switch waveType {
+		switch wave {
 		case "sine":
-			amplitude = GenerateSine()
+			amplitude = o.GenerateSine()
 		case "sawtooth":
-			amplitude = GenerateSawtooth()
+			amplitude = o.GenerateSawtooth()
 		case "square":
-			amplitude = GenerateSquare()
+			amplitude = o.GenerateSquare()
 		case "triangle":
-			amplitude = GenerateTriangle()
+			amplitude = o.GenerateTriangle()
 		default:
-			fmt.Printf("\033[31mError: Failed you generate waveform of requested type %v\033[0m\n", waveType)
+			fmt.Printf("Failed to generate %s waveform", wave)
 			return
 		}
 		SampleBuffer[i] = amplitude
-		AccumulatePhase()
+		o.AccumulatePhase()
 	}
 }
 
-func AccumulatePhase() {
-	Phase += PhaseIncrement
-	if Phase >= PhaseEnd {
-		Phase = PhaseBegin
+func (o *Oscillator) AccumulatePhase() {
+	o.Phase += o.PhaseIncrement
+	if o.Phase >= o.PhaseEnd {
+		o.Phase = o.PhaseBegin
 	}
-	fmt.Printf("Current Phase: %f\n", Phase)
+	fmt.Printf("Current Phase: %f\n", o.Phase)
 }
 
 // Each of these functions generates a sample based
 // on the type of waveform producing the sample
 
-func GenerateSine() float64 {
-	angle := Phase / (2 * math.Pi)
+// TODO: Make these functions independent of the oscillator;
+// oscillator should call these from a different file, but same package
+func (o *Oscillator) GenerateSine() float64 {
+	angle := o.Phase / (2 * math.Pi)
 	amplitude := math.Sin(angle)
 	return amplitude
 }
 
-func GenerateSawtooth() float64 {
-	amplitude := (Phase * 2) - 1
+func (o *Oscillator) GenerateSawtooth() float64 {
+	amplitude := (o.Phase * 2) - 1
 	return amplitude
 }
 
-func GenerateSquare() float64 {
+func (o *Oscillator) GenerateSquare() float64 {
 	var amplitude float64
-	if Phase < 0.5 {
+	if o.Phase < 0.5 {
 		amplitude = -1.0
 	} else {
 		amplitude = 1.0
@@ -71,12 +74,12 @@ func GenerateSquare() float64 {
 	return amplitude
 }
 
-func GenerateTriangle() float64 {
+func (o *Oscillator) GenerateTriangle() float64 {
 	var amplitude float64
-	if Phase < 0.5 {
-		amplitude = (4.0 * Phase) - 1
+	if o.Phase < 0.5 {
+		amplitude = (4.0 * o.Phase) - 1
 	} else {
-		amplitude = (-4.0*Phase + 3)
+		amplitude = (-4.0*o.Phase + 3)
 	}
 	return amplitude
 }
